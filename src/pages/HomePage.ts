@@ -1,14 +1,21 @@
 import {Page, expect} from '@playwright/test';
+import logger from '../utils/LoggerUtil';
 
 export default class HomePage{
-    private readonly loggedInTile = 'h2.spotlightTitleText'
+    private readonly loggedInTitle = 'h2.spotlightTitleText'
 
     constructor(private page:Page){
 
     };
 
 async expectLoggedInTitle(){
-    await this.page.waitForSelector(this.loggedInTile);
-    await expect(this.page.locator(this.loggedInTile)).toBeVisible();
+    await this.page.waitForSelector(this.loggedInTitle);
+    await expect(this.page.locator(this.loggedInTitle)).toBeVisible()
+    .catch((error)=>{
+        logger.error(`Error on showing logged in title ${error}`);
+        throw error;
+    }).then(()=>{
+        logger.info('Logged in title is showing');
+        })
     };
 }
