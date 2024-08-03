@@ -1,10 +1,12 @@
-import {Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 import { error } from 'console';
+import HomePage from './HomePage';
 
 export default class Loginpage{ 
   private readonly usernameSel = '#username';
   private readonly passwordSel = '#password';
   private readonly loginBtnSel = '#Login';
+  private readonly loggedInTile = 'h2.spotlightTitleText'
   private mypage:Page;
 
 
@@ -24,7 +26,7 @@ export default class Loginpage{
         console.error(`Error clicking login button ${error}`);
         throw error;
     });
-
-    
+    const homepage = new HomePage(this.page);
+    return homepage;
   };
 }
